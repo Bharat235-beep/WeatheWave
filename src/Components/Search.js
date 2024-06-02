@@ -1,24 +1,36 @@
 import React, { useEffect, useState } from 'react'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Search = (props) => {
-  const {setforecast}=props
+  const {setforecast,setweather}=props
   const [city,setcity]=useState("chandigarh")
-  const [weather,setweather]=useState({})
+ 
   
   const update = async () => {
+    try{
     const response = await fetch(`https://goweather.herokuapp.com/weather/${city}`);
     const result = await response.json()
-    props.setforecast(result)
+    // props.setforecast(result)
     console.log(result)
+    if(result.message==="NOT_FOUND")
+    {
+      toast.success("Not Found")
+    }else{
     setweather(result)
      setforecast(result.forecast)
+    }
+    }catch(error){
+      console.log(error)
+    }
   }
   const handleChange=(e)=>{
 
     setcity(e.target.value)
    
   }
-  const handleCLick=()=>{
+  const handleSubmit=(e)=>{
+    e.preventDefault()
     update()
   }
   
@@ -26,14 +38,28 @@ const Search = (props) => {
     update()
     // eslint-disable-next-line
   },[])
-  return (
-    <div>
-      <h2>Searching</h2>
-      
-        <input value={city} onChange={handleChange}/>
-        <button onClick={handleCLick}>Search</button>
-      <p>Current:{weather.temperature} {weather.wind}</p>
+  return (<>   
+ <ToastContainer
+position="top-center"
+autoClose={5000}
+hideProgressBar
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="colored"
+/>
+    <div className='b flex justify-center'>
+      <form onSubmit={handleSubmit} className='flex-col my-4'  >
+        <input className=' w-60 h-9 p-2 rounded-2xl border-3 border-transparent focus:border-blue-500 ' value={city} onChange={handleChange}/>
+        <input type='submit' className='bg-blue-800 text-white mx-2 border rounded-xl ring-2 hover:ring-4 w-20 h-8'  value={"Search"} />
+        </form>
     </div>
+  
+    </>
+
   )
 }
 
