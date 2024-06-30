@@ -17,6 +17,7 @@ const Search = (props) => {
     if(result.message==="NOT_FOUND")
     {
       toast.error("Not Found")
+      setLoading(false)
     }else{
     setweather(result)
      setforecast(result.forecast)
