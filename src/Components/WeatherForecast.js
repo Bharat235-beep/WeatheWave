@@ -1,7 +1,7 @@
 import React from 'react'
 
 const WeatherForecast = (props) => {
-    const{forecast}=props;
+    const{forecast,loading}=props;
    
   
   // Function to add days to a date
@@ -26,7 +26,7 @@ const WeatherForecast = (props) => {
         </tr>
         </thead>
         <tbody>
-       {
+       {!loading &&
      forecast.map((forecast)=>{
         return(
           <tr key={forecast.day}>

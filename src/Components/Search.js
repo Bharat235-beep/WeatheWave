@@ -3,25 +3,28 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Search = (props) => {
-  const {setforecast,setweather}=props
+  const {setforecast,setweather,setLoading}=props
   const [city,setcity]=useState("chandigarh")
  
   
   const update = async () => {
     try{
+      setLoading(true)
     const response = await fetch(`https://goweather.herokuapp.com/weather/${city}`);
     const result = await response.json()
     // props.setforecast(result)
     console.log(result)
     if(result.message==="NOT_FOUND")
     {
-      toast.success("Not Found")
+      toast.error("Not Found")
     }else{
     setweather(result)
      setforecast(result.forecast)
+     setLoading(false)
     }
     }catch(error){
       console.log(error)
+      toast.error('Server error')
     }
   }
   const handleChange=(e)=>{

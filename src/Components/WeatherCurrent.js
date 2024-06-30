@@ -1,8 +1,10 @@
 import React from 'react'
+import Spinner from './Spinner'
 
 export default function WeatherCurrent(props) {
-    const {weather}=props
-  return (<>    
+    const {weather,loading}=props
+  return (<>   
+  {loading? <Spinner/> :
     <div className='flex-col justify-center text-center text-2xl  font-serif my-2'>
           {/* <p className=''>Current:{weather.temperature} {weather.wind} {weather.description}</p> */}
    <p>Temperature:<i className="fa-solid fa-temperature-three-quarters"></i><br></br>{weather.temperature}</p>
@@ -11,7 +13,7 @@ export default function WeatherCurrent(props) {
    <br/>
    <p>Weather:<br/>{weather.description}</p>
    <br/>
-    </div>
+    </div>}
     </>
 
   )
