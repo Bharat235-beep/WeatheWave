@@ -22,7 +22,8 @@ const Search = (props) => {
      setforecast(result.forecast)
      setLoading(false)
     }
-    }catch(error){
+  }catch(error){
+      setLoading(false)
       console.log(error)
       toast.error('Server error')
     }
@@ -56,7 +57,7 @@ theme="colored"
 />
     <div className='b flex justify-center'>
       <form onSubmit={handleSubmit} className='flex-col my-4'  >
-        <input className=' w-60 h-9 p-2 rounded-2xl border-3 border-transparent focus:border-blue-500 ' value={city} onChange={handleChange}/>
+        <input className=' w-60 h-9 p-2 rounded-2xl border-3 border-transparent focus:border-blue-500 outline-none' value={city} onChange={handleChange}/>
         <input type='submit' className='bg-blue-800 text-white mx-2 border rounded-xl ring-2 hover:ring-4 w-20 h-8'  value={"Search"} />
         </form>
     </div>
